@@ -1,0 +1,13 @@
+#container {
+    align-content: center;
+}
+button{
+    margin: 1px;
+}
+#display{
+    border: 1px solid black;
+    padding: 3px;
+    margin: 0px;
+    width: 135px;
+    height: 22px;
+}
