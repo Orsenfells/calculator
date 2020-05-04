@@ -7,9 +7,10 @@ function clearDisplay(){
 }
 function doIt(){
     operate(firstNumber, operand, secondNumber);
+    
 }
  function operate(a, operator, b){
-b = parseInt(b);
+    b = parseInt(b);
     let answer = 0;
     switch(operator){
         case '+':  answer = a + b; break;      
@@ -17,9 +18,14 @@ b = parseInt(b);
         case '*':  answer = a * b; break;
         case '/':  answer = a / b; break;
     }; display.innerHTML = answer;
+    receivedAnswer = true;
  }
 
 function onDisplay(e){
+    if(receivedAnswer){
+        clearDisplay();
+        receivedAnswer = false;
+    }
     const isButton = e.target.nodeName === 'BUTTON';
     if (isButton){
         if(e.target.className === "operator"){
@@ -39,6 +45,7 @@ let operatorCheck = false
 
 let firstNumber = 0;
 let operand;
+let receivedAnswer = false;
 let secondNumber = "";
 let display = document.getElementById('display');
 let clear = document.getElementById("clear");
