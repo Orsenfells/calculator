@@ -22,7 +22,11 @@ function doIt(){
  }
 
 function onDisplay(e){
-    if(receivedAnswer){
+    if(receivedAnswer || e.target.className === "operator") {
+        receivedAnswer = false;
+        secondNumber = "";
+    }
+    else if(receivedAnswer){
         clearDisplay();
         receivedAnswer = false;
     }
