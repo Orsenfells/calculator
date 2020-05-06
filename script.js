@@ -6,8 +6,9 @@ function clearDisplay(){
     operatorCheck = false;
 }
 function doIt(){
-    operate(firstNumber, operand, secondNumber);
-    
+  //  operate(firstNumber, operand, secondNumber);
+    testArray.push(hold);
+    test(testArray);
 }
  function operate(a, operator, b){
     b = parseInt(b);
@@ -22,6 +23,8 @@ function doIt(){
  }
 
 function onDisplay(e){
+    // restarts calc after receiving answer if num is pushed
+    // but does not if an operator is clicked
     if(receivedAnswer || e.target.className === "operator") {
         receivedAnswer = false;
         secondNumber = "";
@@ -45,8 +48,54 @@ function onDisplay(e){
     console.log(firstNumber, secondNumber, operatorCheck);
    
 }
-let operatorCheck = false
+// test
+function test(array){
+    for(let i = 0; i < array.length;i++) {
+        switch(array[i]){
+            // replaces the operation in the array with the answer and restarts the loop
+            case "*": array.splice((i - 1), 3, parseInt(array[i - 1]) * parseInt(array[i + 1]));
+            i = 0; 
+            break;
+            case "/": array.splice((i - 1), 3, parseInt(array[i - 1]) / parseInt(array[i + 1]));
+            i = 0;
+            break;
+            case "+": array.splice((i - 1), 3, parseInt(array[i - 1]) + parseInt(array[i + 1]));
+            i = 0;
+            break;
+            case "-": array.splice((i - 1), 3, parseInt(array[i - 1]) - parseInt(array[i + 1]));
+            i = 0;
+            break;
+        }
+    }
+    display.innerHTML = array[0];
+    array = [];
+}
 
+function testDisplay(e){
+    const isButton = e.target.nodeName === 'BUTTON';
+    if(isButton){
+        // if an operator is pressed updates the array with new number and the operator
+        if(e.target.className === "operator"){
+            testArray.push(hold)
+            testArray.push(e.target.innerHTML);
+            hold = "";
+            display.innerHTML += (" " + e.target.innerHTML + " ");
+        } 
+        // stores the number to be inputted into array
+        else {
+            hold += e.target.innerHTML;
+            display.innerHTML += e.target.innerHTML
+        }
+    }
+    console.log(testArray);
+}
+let testArray = []
+let hold = "";
+
+
+
+// test
+let operatorCheck = false
 let firstNumber = 0;
 let operand;
 let receivedAnswer = false;
@@ -58,6 +107,6 @@ let operators = document.getElementById('operators');
 let equals = document.getElementById("equals");
 
 //operators.addEventListener('click', secondNum);
-wrapper.addEventListener('click', onDisplay);
+wrapper.addEventListener('click', testDisplay);
 clear.addEventListener('click', clearDisplay);
 equals.addEventListener('click', doIt);
