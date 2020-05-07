@@ -1,12 +1,10 @@
 
 function clearDisplay(){
     display.innerHTML = "";
-    firstNumber = 0;
-    secondNumber = "";
-    operatorCheck = false;
+    testArray = [];
+    hold = "";
 }
 function doIt(){
-  //  operate(firstNumber, operand, secondNumber);
     testArray.push(hold);
     test(testArray);
 }
@@ -22,58 +20,70 @@ function doIt(){
     receivedAnswer = true;
  }
 
-function onDisplay(e){
-    // restarts calc after receiving answer if num is pushed
-    // but does not if an operator is clicked
-    if(receivedAnswer || e.target.className === "operator") {
-        receivedAnswer = false;
-        secondNumber = "";
-    }
-    else if(receivedAnswer){
-        clearDisplay();
-        receivedAnswer = false;
-    }
-    const isButton = e.target.nodeName === 'BUTTON';
-    if (isButton){
-        if(e.target.className === "operator"){
-            operatorCheck = true;
-            firstNumber = parseInt(display.innerHTML);
-            operand = e.target.innerHTML;
-            display.innerHTML += (" " + e.target.innerHTML + " ");
-            return;
-        } else if(operatorCheck){
-            secondNumber += e.target.innerHTML;
-        }  display.innerHTML += e.target.innerHTML;
-    }
-    console.log(firstNumber, secondNumber, operatorCheck);
-   
-}
 // test
+const multiply = element => element === "*"; 
+const divide = element => element === "/";
+const add = element => element === "+";
+const sub = element => element === "-";
 function test(array){
-    for(let i = 0; i < array.length;i++) {
-        switch(array[i]){
-            // replaces the operation in the array with the answer and restarts the loop
-            case "*": array.splice((i - 1), 3, parseInt(array[i - 1]) * parseInt(array[i + 1]));
-            i = 0; 
-            break;
-            case "/": array.splice((i - 1), 3, parseInt(array[i - 1]) / parseInt(array[i + 1]));
+     for(let i = 0; i < array.length;i++) {
+    //     switch(array[i]){
+    //         // replaces the operation in the array with the answer and restarts the loop
+    //         case "*": array.splice((i - 1), 3, parseInt(array[i - 1]) * parseInt(array[i + 1]));
+    //         i = 0; 
+    //         break;
+    //         case "/": array.splice((i - 1), 3, parseInt(array[i - 1]) / parseInt(array[i + 1]));
+    //         i = 0;
+    //         break;
+    //         case "+": array.splice((i - 1), 3, parseInt(array[i - 1]) + parseInt(array[i + 1]));
+    //         i = 0;
+    //         break;
+    //         case "-": array.splice((i - 1), 3, parseInt(array[i - 1]) - parseInt(array[i + 1]));
+    //         i = 0;
+    //         break;
+    //     }
+    if(array.some(multiply)){
+        array.splice((array.indexOf("*") - 1), 3, parseInt(array[array.indexOf("*") - 1]) * parseInt(array[array.indexOf("*")] + 1));
+        i = 0;
+    } else if(array.some(divide)){
+        let operator = array.indexOf("/");
+        array.splice((operator - 1), 3, parseInt(array[operator - 1]) / parseInt(array[operator + 1]));
+        i = 0;
+    } else if(array.some(add) || array.some(sub)){ 
+        if(array.indexOf("+") < array.indexOf("-") || array.indexOf("-") === -1  /*array.some(add) */){
+            let operator = array.indexOf("+");
+            
+            array.splice((operator - 1), 3, parseInt(array[operator - 1]) + parseInt(array[operator + 1]));
             i = 0;
-            break;
-            case "+": array.splice((i - 1), 3, parseInt(array[i - 1]) + parseInt(array[i + 1]));
-            i = 0;
-            break;
-            case "-": array.splice((i - 1), 3, parseInt(array[i - 1]) - parseInt(array[i + 1]));
-            i = 0;
-            break;
+        } 
+       else {
+            let operator = array.indexOf("-");
+            array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
+             i = 0;
+             console.log("wtf");
         }
-    }
+}
+}   
     display.innerHTML = array[0];
-    array = [];
+    receivedAnswer = true;
+    
+    hold = "";
+    console.log(testArray, hold);
 }
 
 function testDisplay(e){
     const isButton = e.target.nodeName === 'BUTTON';
     if(isButton){
+        if(e.target.className === "operator" && receivedAnswer){
+            hold = testArray[0];
+            console.log(hold);
+            testArray = [];
+            receivedAnswer = false
+        }
+        if(receivedAnswer){
+            clearDisplay();
+            receivedAnswer = false;
+        }
         // if an operator is pressed updates the array with new number and the operator
         if(e.target.className === "operator"){
             testArray.push(hold)
@@ -87,7 +97,7 @@ function testDisplay(e){
             display.innerHTML += e.target.innerHTML
         }
     }
-    console.log(testArray);
+    console.log(testArray, hold);
 }
 let testArray = []
 let hold = "";
