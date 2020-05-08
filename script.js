@@ -42,26 +42,42 @@ function test(array){
     //         i = 0;
     //         break;
     //     }
-    if(array.some(multiply)){
-        array.splice((array.indexOf("*") - 1), 3, parseInt(array[array.indexOf("*") - 1]) * parseInt(array[array.indexOf("*")] + 1));
+    if((array.some(multiply) && array.indexOf("*") < array.indexOf("/")) || (array.indexOf("/") === -1 && array.some(multiply))){
+        let operator = array.indexOf("*");
+        array.splice((operator - 1), 3, parseInt(array[operator - 1]) * parseInt(array[operator + 1]));
+        //array.splice((array.indexOf("*") - 1), 3, parseInt(array[array.indexOf("*") - 1]) * parseInt(array[array.indexOf("*")] + 1));
         i = 0;
     } else if(array.some(divide)){
+        
         let operator = array.indexOf("/");
         array.splice((operator - 1), 3, parseInt(array[operator - 1]) / parseInt(array[operator + 1]));
         i = 0;
-    } else if(array.some(add) || array.some(sub)){ 
-        if(array.indexOf("+") < array.indexOf("-") || array.indexOf("-") === -1  /*array.some(add) */){
-            let operator = array.indexOf("+");
+    // } else if(array.some(add) || array.some(sub)){ 
+    //     if(array.indexOf("+") < array.indexOf("-") || array.indexOf("-") === -1  /*array.some(add) */){
+    //         let operator = array.indexOf("+");
             
+    //         array.splice((operator - 1), 3, parseInt(array[operator - 1]) + parseInt(array[operator + 1]));
+    //         i = 0;
+    //     } 
+    //    else {
+    //         let operator = array.indexOf("-");
+    //         array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
+    //          i = 0;
+    //          console.log("wtf");
+    //     }
+    } else if((array.some(add) && array.indexOf("+") < array.indexOf("-")) || (array.indexOf("-") === -1 && array.some(add))){
+            let operator = array.indexOf("+");
+            console.log(array);
             array.splice((operator - 1), 3, parseInt(array[operator - 1]) + parseInt(array[operator + 1]));
             i = 0;
         } 
-       else {
+       else if (array.some(sub)) {
             let operator = array.indexOf("-");
             array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
              i = 0;
              console.log("wtf");
-        }
+        
+        //
 }
 }   
     display.innerHTML = array[0];
