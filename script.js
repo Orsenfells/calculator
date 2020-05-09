@@ -4,6 +4,17 @@ function clearDisplay(){
     testArray = [];
     hold = "";
 }
+function backButton(){
+    if(display.innerHTML[display.innerHTML.length - 1] === " "){
+        display.innerHTML = display.innerHTML.substr(0, display.innerHTML.length - 3);
+        console.log("thing");
+    } else display.innerHTML = display.innerHTML.substr(0, display.innerHTML.length - 1);
+    console.log("buck");
+}
+// left off here, back button clears display, but gotta mull over how
+// to apply it to the array and hold respectively
+// might be able to change it so the array is formed when the = sign is pressed
+// separated by spaces. gonna have to think it over.
 function doIt(){
     testArray.push(hold);
     test(testArray);
@@ -26,45 +37,15 @@ const divide = element => element === "/";
 const add = element => element === "+";
 const sub = element => element === "-";
 function test(array){
-     for(let i = 0; i < array.length;i++) {
-    //     switch(array[i]){
-    //         // replaces the operation in the array with the answer and restarts the loop
-    //         case "*": array.splice((i - 1), 3, parseInt(array[i - 1]) * parseInt(array[i + 1]));
-    //         i = 0; 
-    //         break;
-    //         case "/": array.splice((i - 1), 3, parseInt(array[i - 1]) / parseInt(array[i + 1]));
-    //         i = 0;
-    //         break;
-    //         case "+": array.splice((i - 1), 3, parseInt(array[i - 1]) + parseInt(array[i + 1]));
-    //         i = 0;
-    //         break;
-    //         case "-": array.splice((i - 1), 3, parseInt(array[i - 1]) - parseInt(array[i + 1]));
-    //         i = 0;
-    //         break;
-    //     }
+     for(let i = 0; i < array.length;i++) { 
     if((array.some(multiply) && array.indexOf("*") < array.indexOf("/")) || (array.indexOf("/") === -1 && array.some(multiply))){
         let operator = array.indexOf("*");
         array.splice((operator - 1), 3, parseInt(array[operator - 1]) * parseInt(array[operator + 1]));
-        //array.splice((array.indexOf("*") - 1), 3, parseInt(array[array.indexOf("*") - 1]) * parseInt(array[array.indexOf("*")] + 1));
         i = 0;
     } else if(array.some(divide)){
-        
         let operator = array.indexOf("/");
         array.splice((operator - 1), 3, parseInt(array[operator - 1]) / parseInt(array[operator + 1]));
         i = 0;
-    // } else if(array.some(add) || array.some(sub)){ 
-    //     if(array.indexOf("+") < array.indexOf("-") || array.indexOf("-") === -1  /*array.some(add) */){
-    //         let operator = array.indexOf("+");
-            
-    //         array.splice((operator - 1), 3, parseInt(array[operator - 1]) + parseInt(array[operator + 1]));
-    //         i = 0;
-    //     } 
-    //    else {
-    //         let operator = array.indexOf("-");
-    //         array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
-    //          i = 0;
-    //          console.log("wtf");
-    //     }
     } else if((array.some(add) && array.indexOf("+") < array.indexOf("-")) || (array.indexOf("-") === -1 && array.some(add))){
             let operator = array.indexOf("+");
             console.log(array);
@@ -76,13 +57,10 @@ function test(array){
             array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
              i = 0;
              console.log("wtf");
-        
-        //
 }
 }   
     display.innerHTML = array[0];
-    receivedAnswer = true;
-    
+    receivedAnswer = true; 
     hold = "";
     console.log(testArray, hold);
 }
@@ -115,17 +93,12 @@ function testDisplay(e){
     }
     console.log(testArray, hold);
 }
-let testArray = []
+
 let hold = "";
-
-
-
-// test
-let operatorCheck = false
-let firstNumber = 0;
 let operand;
+let testArray = [];
 let receivedAnswer = false;
-let secondNumber = "";
+let undo = document.getElementById('undo');
 let display = document.getElementById('display');
 let clear = document.getElementById("clear");
 let wrapper = document.getElementById("wrapper")
@@ -133,6 +106,7 @@ let operators = document.getElementById('operators');
 let equals = document.getElementById("equals");
 
 //operators.addEventListener('click', secondNum);
+undo.addEventListener('click', backButton);
 wrapper.addEventListener('click', testDisplay);
 clear.addEventListener('click', clearDisplay);
 equals.addEventListener('click', doIt);
