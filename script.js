@@ -2,7 +2,6 @@
 function clearDisplay(){
     display.innerHTML = "";
     testArray = [];
-    hold = "";
 }
 function backButton(){
     if(display.innerHTML[display.innerHTML.length - 1] === " "){
@@ -16,7 +15,7 @@ function backButton(){
 // might be able to change it so the array is formed when the = sign is pressed
 // separated by spaces. gonna have to think it over.
 function doIt(){
-    testArray.push(hold);
+    testArray = display.innerHTML.split(" ");
     test(testArray);
 }
  function operate(a, operator, b){
@@ -36,65 +35,56 @@ const multiply = element => element === "*";
 const divide = element => element === "/";
 const add = element => element === "+";
 const sub = element => element === "-";
-function test(array){
-     for(let i = 0; i < array.length;i++) { 
-    if((array.some(multiply) && array.indexOf("*") < array.indexOf("/")) || (array.indexOf("/") === -1 && array.some(multiply))){
-        let operator = array.indexOf("*");
-        array.splice((operator - 1), 3, parseInt(array[operator - 1]) * parseInt(array[operator + 1]));
-        i = 0;
-    } else if(array.some(divide)){
-        let operator = array.indexOf("/");
-        array.splice((operator - 1), 3, parseInt(array[operator - 1]) / parseInt(array[operator + 1]));
-        i = 0;
-    } else if((array.some(add) && array.indexOf("+") < array.indexOf("-")) || (array.indexOf("-") === -1 && array.some(add))){
+function test(array){   
+    for(let i = 0; i < array.length;i++) { 
+        if((array.some(multiply) && array.indexOf("*") < array.indexOf("/")) || (array.indexOf("/") === -1 && array.some(multiply))){
+            let operator = array.indexOf("*");
+            array.splice((operator - 1), 3, parseInt(array[operator - 1]) * parseInt(array[operator + 1]));
+            i = 0;
+        }  else if(array.some(divide)){
+            let operator = array.indexOf("/");
+            array.splice((operator - 1), 3, parseInt(array[operator - 1]) / parseInt(array[operator + 1]));
+            i = 0;
+        } else if((array.some(add) && array.indexOf("+") < array.indexOf("-")) || (array.indexOf("-") === -1 && array.some(add))){
             let operator = array.indexOf("+");
             console.log(array);
             array.splice((operator - 1), 3, parseInt(array[operator - 1]) + parseInt(array[operator + 1]));
             i = 0;
-        } 
-       else if (array.some(sub)) {
+        }  else if (array.some(sub)) {
             let operator = array.indexOf("-");
             array.splice((operator - 1), 3, parseInt(array[operator - 1]) - parseInt(array[operator + 1]));
-             i = 0;
-             console.log("wtf");
-}
-}   
+            i = 0;
+        }
+    }   
     display.innerHTML = array[0];
     receivedAnswer = true; 
-    hold = "";
-    console.log(testArray, hold);
+    console.log(testArray);
 }
 
 function testDisplay(e){
     const isButton = e.target.nodeName === 'BUTTON';
     if(isButton){
-        if(e.target.className === "operator" && receivedAnswer){
-            hold = testArray[0];
-            console.log(hold);
-            testArray = [];
+        // if an operator is pressed after receiving answer starts new operation 
+        if(e.target.className === "operator" && receivedAnswer){            
             receivedAnswer = false
-        }
+        } // clears operation if number is pressed instead and starts anew
         if(receivedAnswer){
             clearDisplay();
             receivedAnswer = false;
         }
-        // if an operator is pressed updates the array with new number and the operator
+        
         if(e.target.className === "operator"){
-            testArray.push(hold)
-            testArray.push(e.target.innerHTML);
-            hold = "";
             display.innerHTML += (" " + e.target.innerHTML + " ");
         } 
         // stores the number to be inputted into array
         else {
-            hold += e.target.innerHTML;
-            display.innerHTML += e.target.innerHTML
+            display.innerHTML += e.target.innerHTML;
         }
     }
-    console.log(testArray, hold);
+    console.log(testArray);
 }
 
-let hold = "";
+
 let operand;
 let testArray = [];
 let receivedAnswer = false;
