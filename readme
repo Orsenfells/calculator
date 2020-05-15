@@ -1,9 +1,4 @@
-So far i have a calculator that can do a single operation and present the answer.
-issues
--cannot string operations together ex: 2 + 2 + 2. the code make it into 2 + 22
--No decimcal calculation
--the layout is ass
 
 
+credit to overdice for the css layout, his project helped me a lot
 
-- *fixed* pressing a button after.. 

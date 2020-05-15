@@ -64,7 +64,8 @@ function test(array){
 
 function testDisplay(e){
     const isButton = e.target.nodeName === 'BUTTON';
-    if(isButton){
+    const notException = e.target.className !== 'exception';
+    if(isButton && notException){
         // if an operator is pressed after receiving answer starts new operation 
         if(e.target.className === "operator" && receivedAnswer){            
             receivedAnswer = false
@@ -102,10 +103,10 @@ let undo = document.getElementById('undo');
 let display = document.getElementById('display');
 let clear = document.getElementById("clear");
 let wrapper = document.getElementById("wrapper")
-let operators = document.getElementById('operators');
+
 let equals = document.getElementById("equals");
 
-//operators.addEventListener('click', secondNum);
+
 undo.addEventListener('click', backButton);
 wrapper.addEventListener('click', testDisplay);
 clear.addEventListener('click', clearDisplay);
