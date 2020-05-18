@@ -4,13 +4,11 @@
     font-weight: normal;
 }
 
-#display{
-    background-color: white;
-}
+
 body{
     /*padding: 0;
     margin: 0;*/
-    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    background: linear-gradient(to right, #3bcff0, #2193b0);
 }
 
 
@@ -26,16 +24,22 @@ body{
 #wrapper > button {
     border: 1px solid black;
     outline: none;
+    font-size: 1rem;
     background-color: lightpink;
 }
-#display{
+#wrapper > .operator{
+font-size: 2rem;
+}
+#output{
     border: 1px solid black;
+    background-color: white;
     grid-column: 1 / -1;
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
     flex-direction: column;
     padding: 10px;
+    word-break: break-word;
     word-break: break-all;  
 }
 #numZero{
@@ -44,3 +48,10 @@ body{
 #clear{
     grid-column: 1 / 3;
 }
+#wrapper > button:hover {
+    background-color: lightslategray;
+}
+#display{
+    font-size: 2.5rem;
+}
+

@@ -1,6 +1,7 @@
 
 function clearDisplay(){
-    display.innerHTML = "";
+    display.innerHTML = "0";
+    placeholder = true;
     testArray = [];
     decimalFlag = false
 }
@@ -63,16 +64,27 @@ function test(array){
 }
 
 function testDisplay(e){
+    
     const isButton = e.target.nodeName === 'BUTTON';
     const notException = e.target.className !== 'exception';
+     
     if(isButton && notException){
+        
+        
         // if an operator is pressed after receiving answer starts new operation 
         if(e.target.className === "operator" && receivedAnswer){            
             receivedAnswer = false
         } // clears operation if number is pressed instead and starts anew
         if(receivedAnswer){
             clearDisplay();
+            
             receivedAnswer = false;
+        }
+        if(placeholder){
+            console.log(e.target.nodeName, e.target.innerHTML);
+            display.innerHTML = "";
+            console.log(display.innerHTML); 
+            placeholder = false;
         }
         if(e.target.innerHTML === "." && decimalFlag){
             console.log("dang")
@@ -88,6 +100,7 @@ function testDisplay(e){
         } 
         // stores the number to be inputted into array
         else {
+            console.log(e.target.innerHTML)
             display.innerHTML += e.target.innerHTML;
         }
     }
@@ -97,6 +110,7 @@ function testDisplay(e){
 
 let operand;
 let testArray = [];
+let placeholder = true;
 let decimalFlag = false;
 let receivedAnswer = false;
 let undo = document.getElementById('undo');
